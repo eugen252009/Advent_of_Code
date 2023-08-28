@@ -9,10 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "fs": "0.0.1-security"
-  },
   "devDependencies": {
-    "@types/node": "^20.5.6"
+    "@types/node": "^20.5.7"
   }
 }

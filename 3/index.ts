@@ -1,5 +1,4 @@
-// @ts-ignore
-import fs from "node:fs"
+import fs from "fs"
 const input = fs.readFileSync("input.txt").toString()
 const sample = `vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
