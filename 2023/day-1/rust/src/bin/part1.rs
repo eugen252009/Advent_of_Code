@@ -5,8 +5,9 @@ fn main() {
 pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet";
-    println!("Test Input:\t{},\tNeeds:{}", solve(test_input), 142);
-    println!("Final Input:\t{}", solve(input));
+    // println!("Test Input:\t{},\tNeeds:{}", solve(test_input), 142);
+    // println!("Final Input:\t{}", solve(input));
+    println!("{}", newapproach(test_input));
 }
 
 fn solve(inputstr: &str) -> i32 {
@@ -30,4 +31,12 @@ fn solve(inputstr: &str) -> i32 {
         }
     }
     count
+}
+
+fn newapproach(input: &str) -> i32 {
+    let result =0
+    let item = for ele in input.lines().map(|line| line.split(":").nth(0).unwrap()) {
+        println!("{}", ele);
+    };
+    result
 }
