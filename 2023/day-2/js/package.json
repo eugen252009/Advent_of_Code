@@ -1,0 +1,13 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "start":"node part1.js; node part2.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
