@@ -35,15 +35,12 @@ function solve(input) {
 		const element = item[0]
 		res.push(walk(element, { instructions, paths }))
 	}
-	const max = res.reduce((acc, curr) => {
-		return Math.max(acc, curr[0])
-	}, 0)
-
-	console.log({ res, max })
+	const i = findLCM(res)
+	console.log(i)
 }
 function walk(item, { paths, instructions }) {
 	let i = 0, lastitem = item
-	do {
+	while (lastitem.slice(-1) !== "Z") {
 		if (instructions[i % instructions.length] === "R") {
 			lastitem = paths[lastitem][1]
 		} else if (instructions[i % instructions.length] === "L") {
@@ -51,7 +48,25 @@ function walk(item, { paths, instructions }) {
 		}
 		i++
 	}
-	while (lastitem.slice(-1) !== "Z")
-	return [i, lastitem]
+	return i
+}
+function gcd(a, b) {
+	while (b !== 0) {
+		const temp = b;
+		b = a % b;
+		a = temp;
+	}
+	return a;
 }
 
+function lcm(a, b) {
+	return (a * b) / gcd(a, b);
+}
+
+function findLCM(numbers) {
+	let result = numbers[0];
+	for (let i = 1; i < numbers.length; i++) {
+		result = lcm(result, numbers[i]);
+	}
+	return result;
+}
