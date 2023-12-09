@@ -1,10 +1,10 @@
-use itertools::Itertools;
+use itertools::{Itertools, Position};
 use std::ops::Deref;
 
 fn main() {
     let input = include_str!("../../../input");
     let result = solve(input);
-    dbg!(result);
+    println!("{}", result)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -25,7 +25,7 @@ mod tests {
     #[test]
     fn testinput() {
         let result = include_str!("../../../testinput");
-        assert_eq!(solve(result), 6440);
+        assert_eq!(solve(result), 5905);
     }
 }
 
@@ -45,8 +45,28 @@ fn solve(input: &str) -> u32 {
 
 fn score_hand(hand: &str) -> (HandType, (u32, u32, u32, u32, u32)) {
     use HandType::*;
+
     let counts = hand.chars().counts();
-    let values = counts.values().sorted().join("");
+
+    let values = if let Some(joker_count) = counts.get(&'J') {
+        if *joker_count == 5 {
+            "5".to_string()
+        } else {
+            counts
+                .iter()
+                .filter_map(|(key, value)| (key != &'J').then_some(value))
+                .sorted()
+                .with_position()
+                .map(|(position, value)| match position {
+                    Position::Last | Position::Only => value + joker_count,
+                    _ => *value,
+                })
+                .join("")
+        }
+    } else {
+        counts.values().sorted().join("")
+    };
+
     let hand_type = match values.deref() {
         "5" => FiveOfAKind,
         "14" => FourOfAKind,
@@ -55,7 +75,7 @@ fn score_hand(hand: &str) -> (HandType, (u32, u32, u32, u32, u32)) {
         "122" => TwoPair,
         "1112" => OnePair,
         "11111" => HighCard,
-        value => panic!("should never happen {}", value),
+        value => panic!("should never happen. Encountered `{}`", value),
     };
     let card_scores = hand
         .chars()
@@ -63,7 +83,7 @@ fn score_hand(hand: &str) -> (HandType, (u32, u32, u32, u32, u32)) {
             'A' => 14,
             'K' => 13,
             'Q' => 12,
-            'J' => 11,
+            'J' => 1,
             'T' => 10,
             value => value.to_digit(10).unwrap(),
         })
