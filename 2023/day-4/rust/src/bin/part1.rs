@@ -7,7 +7,7 @@ Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
 Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
 
-    println!("{}:{}", solve(testinput), 13);
+    // println!("{}:{}", solve(testinput), 13);
     println!("{}", solve(input));
 }
 
@@ -15,7 +15,6 @@ fn solve(input: &str) -> i32 {
     let mut result = 0;
     let lines = input.lines();
     for line in lines {
-        let id = line.chars().nth(5).unwrap();
         let mut preres = 0;
         if line.len() == 0 {
             continue;
@@ -29,7 +28,6 @@ fn solve(input: &str) -> i32 {
         let part2: Vec<&str> = parts.next().unwrap().split_whitespace().collect();
         for num in part1 {
             if part2.contains(&num) {
-            println!("{id} {}", num);
                 winning += 1;
             };
         }
@@ -40,7 +38,6 @@ fn solve(input: &str) -> i32 {
                 preres *= 2;
             }
         }
-        println!("{id} preres:{}", preres);
         result += preres;
     }
     return result;

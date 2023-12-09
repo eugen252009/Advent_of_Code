@@ -15,7 +15,6 @@ mod tests {
             .lines()
             .map(|line| solve(line))
             .sum();
-        // dbg!(result);
         assert_eq!(result, 114)
     }
 }
@@ -29,12 +28,9 @@ fn solve(input: &str) -> i32 {
     return i.iter().sum();
 }
 fn make_table(data: &Vec<i32>) -> &Vec<i32> {
-    let table: Vec<i32> = data.to_vec();
     let i = data.len();
     let mut j = 0;
     while j < i {
-        
-        
         j += 1;
     }
     for num in data {
