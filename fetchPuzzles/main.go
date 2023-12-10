@@ -36,8 +36,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Error occured while attempting to download", err)
 	}
-	os.MkdirAll(fmt.Sprintf("./%d/day-%d", year, day), 0775)
-	os.WriteFile(fmt.Sprintf("./%d/day-%d/input", year, day), data, 0664)
+	os.MkdirAll(fmt.Sprintf("./%d/day-%02d", year, day), 0775)
+	os.WriteFile(fmt.Sprintf("./%d/day-%02d/input", year, day), data, 0664)
 
 	// Downlaoding Readme
 	url2 := fmt.Sprintf("https://adventofcode.com/%d/day/%d", year, day)
@@ -46,7 +46,7 @@ func main() {
 	split1 := strings.Split(tmp, "##")[1]
 	split2 := strings.Split(split1, "To begin, [get your puzzle input]")[0]
 	finaldata := "## " + split2
-	os.WriteFile(fmt.Sprintf("./%d/day-%d/Readme.md", year, day), []byte(finaldata), 0664)
+	os.WriteFile(fmt.Sprintf("./%02d/day-%02d/Readme.md", year, day), []byte(finaldata), 0664)
 }
 
 func downloadFile(url, cookie string) ([]byte, error) {
