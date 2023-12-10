@@ -5,25 +5,20 @@
 
 int main() {
   int result = 0;
-  FILE *file2 = fopen("input", "r");
+  FILE *file2 = fopen("../input", "r");
   if (file2 == NULL) {
     perror("Error opening file");
     return 1;
   }
   char line[1024];
   while (fgets(line, sizeof(line), file2) != NULL) {
-    int leftmost = -1;
-    int rightmost = -1;
+    char leftmost = -1;
+    char rightmost = -1;
     int len = strlen(line);
-
     for (int i = 0; i < len; i++) {
       if (!isdigit(line[i])) {
         continue;
       }
-
-      char linechar[1] = {line[i]};
-      int currentNumber = atoi(linechar);
-      printf("%d_%d\n", line[i], currentNumber);
       if (leftmost == -1) {
         leftmost = line[i];
         rightmost = line[i];
@@ -31,14 +26,12 @@ int main() {
         rightmost = line[i];
       }
     }
-    char string[2] = {leftmost, rightmost};
-    result += atoi(string);
-    printf("zwischen result:%d\n", result);
-    // line);
+    int right = rightmost -= '0';
+    int left = leftmost -= '0';
+    result += left*10+right;
   }
 
-  // Close the file
   fclose(file2);
-  printf("%d", result);
+  printf("%d\n", result);
   return 0;
 }

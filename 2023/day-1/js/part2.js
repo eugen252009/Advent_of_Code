@@ -1,5 +1,5 @@
 const fs = require("fs")
-let finalinput = fs.readFileSync("../input.txt").toString()
+let finalinput = fs.readFileSync("../input").toString()
 let input = `two1nine
 eightwothree
 abcone2threexyz

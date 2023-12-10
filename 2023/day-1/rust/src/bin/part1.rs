@@ -1,13 +1,15 @@
+use std::usize;
+
 use regex::Regex;
 fn main() {
-    let input = include_str!("../../../input.txt");
-    let test_input = "1abc2
+    let input = include_str!("../../../input");
+    let testinput = "1abc2
 pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet";
     // println!("Test Input:\t{},\tNeeds:{}", solve(test_input), 142);
-    // println!("Final Input:\t{}", solve(input));
-    println!("{}", newapproach(test_input));
+    println!("Final Input:\t{}", solve(input));
+    println!("Final Input:\t{}", solve2(testinput));
 }
 
 fn solve(inputstr: &str) -> i32 {
@@ -32,11 +34,33 @@ fn solve(inputstr: &str) -> i32 {
     }
     count
 }
-
-fn newapproach(input: &str) -> i32 {
-    let result =0
-    let item = for ele in input.lines().map(|line| line.split(":").nth(0).unwrap()) {
-        println!("{}", ele);
-    };
-    result
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn it_works() {
+        let testinput = "1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet";
+        assert_eq!(solve2(testinput), 281);
+    }
 }
+
+// fn solve2(input: &str) -> usize {
+//     let mut finalres = 0;
+//     let mut result = input
+//         .lines()
+//         .map(|line| line.chars().filter(|char| char.is_digit(10)))
+//         .map(|f| f.map(|d| d.to_digit(10).unwrap()));
+//     let i = result.clone().count() / 2;
+//     let mut x = 0;
+//     while x < i {
+//         let num1 = result.next().unwrap();
+//         let num2 = result.next().unwrap();
+//         finalres += num1 * 10 + num2;
+//         println!("{}{} {}", num1, num2, finalres);
+//         x += 1;
+//     }
+//     return finalres as usize;
+// }
