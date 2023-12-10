@@ -1,0 +1,16 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "1": "node part1.js",
+    "2": "node part2.js",
+    "test1": "nodemon part1.js",
+    "test2": "nodemon part2.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
