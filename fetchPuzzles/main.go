@@ -43,7 +43,7 @@ func main() {
 	url2 := fmt.Sprintf("https://adventofcode.com/%d/day/%d", year, day)
 	file, _ := downloadFile(url2, cookie)
 	tmp := parsemd(string(file))
-	split1 := strings.Split(tmp, "##")[1]
+	split1 := strings.Join(strings.Split(tmp, "##")[1:], "")
 	split2 := strings.Split(split1, "To begin, [get your puzzle input]")[0]
 	finaldata := "## " + split2
 	os.WriteFile(fmt.Sprintf("./%02d/day-%02d/Readme.md", year, day), []byte(finaldata), 0664)
