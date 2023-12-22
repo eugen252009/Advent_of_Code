@@ -1,47 +1,68 @@
-use std::collections::HashMap;
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn solving() {
+        let input = "Time:      7  15   30
+Distance:  9  40  200";
+        let result = 71503;
+        assert_eq!(solve(input), result);
+    }
+}
 
 fn main() {
-    // let input = include_str!("../../../input");
-    let testinput = "seeds: 79 14 55 13
-
-seed-to-soil map:
-50 98 2
-52 50 48
-
-soil-to-fertilizer map:
-0 15 37
-37 52 2
-39 0 15
-
-fertilizer-to-water map:
-49 53 8
-0 11 42
-42 0 7
-57 7 4
-
-water-to-light map:
-88 18 7
-18 25 70
-
-light-to-temperature map:
-45 77 23
-81 45 19
-68 64 13
-
-temperature-to-humidity map:
-0 69 1
-1 0 69
-
-humidity-to-location map:
-60 56 37
-56 93 4";
-
-    println!("{}:{}", solve(testinput), 13);
-    // println!("{}", solve(input));
+    let input = include_str!("../../../input");
+    let result = solve(input);
+    println!("{}", result);
 }
 
 fn solve(input: &str) -> i32 {
     let mut result = 0;
-    result += 1;
+    let items = input.split_once("\n").unwrap();
+    let distance = items
+        .1
+        .split_once(": ")
+        .unwrap()
+        .1
+        .trim()
+        .split(" ")
+        .filter(|f| {
+            if f == &"" {
+                return false;
+            }
+            return true;
+        })
+        .collect::<Vec<&str>>();
+    let mut distances = "".to_owned();
+    for ele in distance {
+        distances.push_str(ele)
+    }
+    let distancenum = distances.parse::<i64>().unwrap();
+    let times = items
+        .0
+        .split_once(": ")
+        .unwrap()
+        .1
+        .trim()
+        .split(" ")
+        .filter(|f| {
+            if f == &"" {
+                return false;
+            }
+            return true;
+        })
+        .collect::<Vec<&str>>();
+    let mut timestr = "".to_owned();
+    for ele in times {
+        timestr.push_str(ele)
+    }
+    let timenum = timestr.parse::<i64>().unwrap();
+    for item in 1..(timenum as usize) {
+        let racetime = timenum - item as i64;
+        let raceddistance = racetime * item as i64;
+        if raceddistance > distancenum {
+            result += 1;
+        }
+    }
     return result;
 }
