@@ -4,7 +4,6 @@ const nearbycells = [-1, 1, 0, 0]
 const nearbyrows = [0, 0, -1, 1]
 
 const parsedinput = parse(input)
-// console.log({ parsedinput })
 const result = solve(parsedinput)
 console.log({ result })
 
@@ -27,13 +26,19 @@ function parse(inputstring) {
 		}
 		adjacency_list.set(index, addMap)
 	}
-	// adjacency_list.get(1)
 	return [adjacency_list, galaxys]
 }
+
 function solve([grid, galaxys]) {
-	console.log(galaxys)
-	while (true) {
-		// console.log(grid.get(start[0]))
-		break
-	}
+	return bfs(galaxys, grid)
+}
+
+function bfs(e, f) {
+	const queue = []
+	const visited = []
+	queue.push(e)
+	visited.push(e)
+
+	// console.log(e, f)
+	return 1
 }
