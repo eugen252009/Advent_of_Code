@@ -2,8 +2,10 @@
 #include <iostream>
 
 int main() {
-  ofstream myfile;
+  std::ofstream myfile;
   myfile.open("../input.txt");
-  std::string buffer = malloc(sizeof(std::string)) cout << "Hallo" << endl;
+  void *ptr = malloc(sizeof(std::string) * myfile.width());
+  std::cout << &ptr << std::endl;
+  free(ptr);
   return 0;
 }
