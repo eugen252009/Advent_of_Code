@@ -8,26 +8,31 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	md "github.com/JohannesKaufmann/html-to-markdown"
 )
 
 func main() {
-	year := time.Now().Year()
-	day := time.Now().Day()
-	if len(os.Args) > 2 && len(os.Args) < 4 {
+	parsedyear, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		panic(err.Error())
+	}
+	argc := len(os.Args)
+	if argc == 2 {
+		for i := 1; i < 26; i++ {
+			downloadDay(parsedyear, i)
+		}
+		fmt.Println(os.Args)
+	} else if argc > 2 && argc < 4 {
 		parsedyear, err := strconv.Atoi(os.Args[1])
 		parsedday, err := strconv.Atoi(os.Args[2])
 		if err != nil {
-			year = time.Now().Year()
-			day = time.Now().Day()
-		} else {
-			year = parsedyear
-			day = parsedday
+			panic(err.Error())
 		}
-
+		downloadDay(parsedyear, parsedday)
 	}
+}
+func downloadDay(year int, day int) {
 	cookiebytes, _ := os.ReadFile("cookie")
 	cookie := strings.TrimSpace(string(cookiebytes))
 
