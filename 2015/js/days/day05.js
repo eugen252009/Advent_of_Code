@@ -108,7 +108,7 @@ function checkForDuplicates(word) {
 		if (set.has(`${word[i]}${word[i + 1]}`)) {
 			// console.log(`${word[i - 4]}${word[i - 3]}` !== `${word[i - 1]} + ${word[i]}`, `${word[i - 1]}${word[i]}`, word)
 			if (i > 4 && `${word[i - 3]}${word[i - 2]}` !== `${word[i - 1]} + ${word[i]}`) {
-				console.log(`${word[i]}${word[i + 1]}`, `${word[i - 3] + word[i - 2]}`)
+				// console.log(`${word[i]}${word[i + 1]}`, `${word[i - 3] + word[i - 2]}`)
 				return true
 			} else {
 				continue
@@ -116,7 +116,7 @@ function checkForDuplicates(word) {
 		}
 		set.add(`${word[i]}${word[i + 1]}`)
 	}
-	console.log(set)
+	// console.log(set)
 	return false
 }
 

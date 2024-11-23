@@ -35,8 +35,8 @@ function Day(day, path, pause) {
 Day(days.day1, "../day-01/input");
 Day(days.day2, "../day-02/input");
 Day(days.day3, "../day-03/input");
-// Day(days.day4, "../day-04/input", true);
-Day(days.day5, "../day-05/input", 1);
+// Day(days.day4, "../day-04/input");
+Day(days.day5, "../day-05/input");
 Day(days.day6, "../day-06/input");
 Day(days.day7, "../day-07/input");
 Day(days.day8, "../day-08/input");
