@@ -6,16 +6,13 @@ Willkommen zu meinem Repository für [Advent of Code](https://adventofcode.com/)
 
 ```
 /
-├── 2015/
-|   ├── js/
-│   └── solutions.js
-|   ├── python3/
-│   └── solutions.py
-├── 2022/
-|   ├── js/
-│   └── solutions.js
-├── ...
-└── README.md           # Dieses Dokument
+├── inputs/*
+├── solutions/
+|   └── js/*
+|
+├── Makefile
+├── solutions.js
+└── README.md
 ```
 
 Die Struktur kann je nach verwendeter Programmiersprache oder Framework leicht variieren.
@@ -30,12 +27,11 @@ Die Struktur kann je nach verwendeter Programmiersprache oder Framework leicht v
 ### Ausführung
 
 ```bash
-cd 2015/js
-bun solutions.js
+make js 
 ```
+
 ```bash
-cd 2015/python3
-python3 solutions.py
+make python
 ```
 
 ## 🎯 Ziele

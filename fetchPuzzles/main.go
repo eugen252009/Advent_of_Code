@@ -13,24 +13,35 @@ import (
 )
 
 func main() {
-	parsedyear, err := strconv.Atoi(os.Args[1])
-	if err != nil {
-		panic(err.Error())
-	}
 	argc := len(os.Args)
-	if argc == 2 {
-		for i := 1; i < 26; i++ {
-			downloadDay(parsedyear, i)
+	if argc > 1 {
+		if os.Args[1] == "h" || os.Args[1] == "?" {
+			PrintHelp()
+			return
 		}
-		fmt.Println(os.Args)
-	} else if argc > 2 && argc < 4 {
 		parsedyear, err := strconv.Atoi(os.Args[1])
-		parsedday, err := strconv.Atoi(os.Args[2])
 		if err != nil {
-			panic(err.Error())
+			PrintHelp()
+			return
 		}
-		downloadDay(parsedyear, parsedday)
+		if argc == 2 {
+			for i := 1; i < 26; i++ {
+				downloadDay(parsedyear, i)
+			}
+			fmt.Println(os.Args)
+		} else if argc > 2 && argc < 4 {
+			parsedyear, err := strconv.Atoi(os.Args[2])
+			parsedday, err := strconv.Atoi(os.Args[1])
+			if err != nil {
+				PrintHelp()
+			}
+			downloadDay(parsedyear, parsedday)
+		}
 	}
+}
+func PrintHelp() {
+	fmt.Printf("%s\n", "Usage: [day] [year?] ")
+	os.Exit(0)
 }
 func downloadDay(year int, day int) {
 	cookiebytes, _ := os.ReadFile("cookie")
