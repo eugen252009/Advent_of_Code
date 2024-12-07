@@ -27,6 +27,7 @@ export class Day {
 			path = `./inputs/${year}/day-${day}/input`;
 		}
 		if (!existsSync(path)) {
+			console.log("Error while loading File: is it Missing?")
 			return;
 		}
 		try {
@@ -36,13 +37,15 @@ export class Day {
 			// its skipped because its maybe not available yet.
 			// or it needs to be solved
 		}
-		if (part1 !== undefined) {
+		if (typeof part1 === "function") {
+			// if (typeof (part1) undefined) {
 			this.part1 = part1;
 		}
-		if (part2 !== undefined) {
+		// }
+		if (typeof part2 === "function") {
 			this.part2 = part2;
 		}
-		if (test !== undefined) {
+		if (test != undefined) {
 			test();
 		}
 	}
