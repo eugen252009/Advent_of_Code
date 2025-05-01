@@ -34,6 +34,7 @@ func main() {
 			parsedday, err := strconv.Atoi(os.Args[1])
 			if err != nil {
 				PrintHelp()
+				return
 			}
 			downloadDay(parsedyear, parsedday)
 		}
