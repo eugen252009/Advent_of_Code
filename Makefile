@@ -1,2 +1,0 @@
-js:
-	bun solutions.js
