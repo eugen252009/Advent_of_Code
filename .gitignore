@@ -5,4 +5,9 @@ input.txt
 cookie
 **/*cache*
 **/pnpm-lock.yaml
+/getPuzzle
+/fetchPuzzles/getPuzzle
+/testcookie
 
+# CocoIndex Code (ccc)
+/.cocoindex_code/
