@@ -1,4 +1,8 @@
 .DEFAULT_GOAL := help
+.PHONY: js
+js:
+	node scripts/run-js.mjs $(if $(DAY),$(DAY),all)
+
 .PHONY: build help next_year fetch
 
 # Positional day: make fetch 03. Reject other additional targets.
