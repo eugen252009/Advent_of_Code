@@ -20,12 +20,7 @@ export class Day {
 	constructor({ part1, part2, test }, { year, day }) {
 		this.day = day;
 		this.year = year;
-		let path = "";
-		if (day < 10) {
-			path = `./inputs/${year}/day-0${day}/input`;
-		} else {
-			path = `./inputs/${year}/day-${day}/input`;
-		}
+		const path = new URL(`../../days/day-${String(day).padStart(2, "0")}/input`, import.meta.url);
 		if (!existsSync(path)) {
 			console.log("Error while loading File: is it Missing?")
 			return;

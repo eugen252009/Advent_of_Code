@@ -34,4 +34,4 @@ help:
 
 .PHONY: js
 js:
-	bun solutions.js
+	node scripts/run-js.mjs $(if $(DAY),$(DAY),all)
