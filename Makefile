@@ -31,7 +31,7 @@ fetch:
 	@python3 scripts/aoc.py fetch $(FETCH_ARGS) $(if $(YEAR),--year $(YEAR))
 
 help:
-	@echo 'make next_year [YEAR=2027]  Neuen Jahres-Worktree vorbereiten'
+	@echo 'make next_year [YEAR=2027]  Jahres-Worktree anlegen (frischer Fork: laufendes Jahr)'
 	@echo 'make fetch 03 [YEAR=2027]   Aufgabe und Input für Tag 03 laden'
 	@echo 'make fetch all [YEAR=2024] Alle Tage eines abgeschlossenen Jahres laden'
 	@echo 'make build                 Downloader bauen'

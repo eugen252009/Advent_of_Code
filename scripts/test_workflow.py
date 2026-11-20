@@ -1,4 +1,5 @@
 """Offline regression tests for the Make/Go bridge and the JS runner."""
+from datetime import date
 import importlib.util
 from pathlib import Path
 import shutil
@@ -14,6 +15,24 @@ spec.loader.exec_module(aoc)
 
 
 class WorkflowTests(unittest.TestCase):
+    def test_first_year_in_main_only_clone(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'my AoC fork'
+            subprocess.run(['git', 'clone', '--quiet', '--single-branch', '--branch', 'main', str(ROOT), str(clone)], check=True)
+            shutil.copy2(ROOT / 'scripts/aoc.py', clone / 'scripts/aoc.py')
+            (clone / 'cookie').write_text('session=test')
+            head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=clone)
+            result = subprocess.run(['make', 'next_year'], cwd=clone, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            year = str(date.today().year)
+            worktree = clone.with_name(clone.name + '-years') / year
+            self.assertIn(f"cd '{worktree}'", result.stdout)
+            self.assertTrue((worktree / 'days/day-01/.gitkeep').is_file())
+            self.assertTrue((worktree / 'fetchPuzzles/main.go').is_file())
+            self.assertFalse((worktree / 'cookie').exists())
+            self.assertEqual(subprocess.check_output(['git', 'rev-parse', year], cwd=clone), head)
+            self.assertEqual(subprocess.check_output(['git', 'branch', '--show-current'], cwd=clone).strip(), b'main')
+
     def test_fetch_selection(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

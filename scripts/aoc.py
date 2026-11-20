@@ -4,6 +4,7 @@ import argparse
 from datetime import date
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import sys
 
@@ -24,8 +25,10 @@ def next_year(year):
     branches = git('for-each-ref', '--format=%(refname:short)', 'refs/heads', 'refs/remotes/origin').splitlines()
     years = [int(b.removeprefix('origin/')) for b in branches
              if re.fullmatch(r'(origin/)?20\d{2}', b)]
-    year = year or max(years, default=date.today().year - 1) + 1
-    year_value(str(year))
+    current_year = date.today().year
+    year = year or max(current_year, max(years, default=current_year - 1) + 1)
+    if not 2015 <= year <= 2099:
+        raise ValueError('Jahr muss zwischen 2015 und 2099 liegen')
     if str(year) in branches or f'origin/{year}' in branches:
         raise ValueError(f'Branch {year} existiert bereits; nichts geändert')
     primary = Path(git('rev-parse', '--path-format=absolute', '--git-common-dir')).parent
@@ -37,6 +40,8 @@ def next_year(year):
     files = ['Makefile', '.gitignore', 'scripts/aoc.py', 'scripts/run-js.mjs', 'fetchPuzzles/main.go',
              'fetchPuzzles/go.mod', 'fetchPuzzles/go.sum', 'fetchPuzzles/Makefile']
     files += [str(p.relative_to(ROOT)) for p in (ROOT / 'fetchPuzzles').glob('*_test.go')]
+    if (ROOT / 'scripts/test_workflow.py').is_file():
+        files.append('scripts/test_workflow.py')
     snapshots = {name: (ROOT / name).read_bytes() for name in files}
     base = 'main' if 'main' in branches else 'HEAD'
     subprocess.run(['git', '-C', str(ROOT), 'worktree', 'add', '-b', str(year), str(destination), base], check=True)
@@ -60,10 +65,10 @@ def next_year(year):
         '## Aufgaben herunterladen\n\n'
         'Go ab 1.26, Python ab 3.9 und make benötigt. Im Branch-Hauptverzeichnis eine lokale '
         '`cookie`-Datei mit `session=DEIN_WERT` anlegen, dann:\n\n'
-        '```sh\nmake fetch 03\nmake fetch all  # nur abgeschlossene Jahre\n```\n\n'
-        'Aufgabe: `days/day-03/README.md`, persönlicher Input: `days/day-03/input` '
+        '```sh\nmake fetch 01\nmake fetch all  # nur abgeschlossene Jahre\n```\n\n'
+        'Aufgabe: `days/day-01/README.md`, persönlicher Input: `days/day-01/input` '
         '(gitignored). Beispielinputs als `example.txt` versionieren. '
-        'Lösungen je Sprache unter `days/day-03/js/`, `python/`, `rust/` usw. ablegen; '
+        'Lösungen je Sprache unter `days/day-01/js/`, `python/`, `rust/` usw. ablegen; '
         'alle Sprachen verwenden denselben Tagesinput. Gemeinsame Helfer liegen unter '
         '`utils/<sprache>/`. Sprachordner werden erst bei Bedarf angelegt.\n\n'
         'JS-Module mit `part1`/`part2`: `make js DAY=03` (Node.js ab 22). Einzelne Programme aus dem jeweiligen Sprachordner starten.\n\n'
@@ -71,7 +76,11 @@ def next_year(year):
         '`make next_year` bereitet den nächsten Jahres-Branch in einem separaten Worktree vor. '
         'Diese Vorbereitung enthält keine Commits; auch die leeren Tagesordner sind nur Vorlagen, keine Lösungen.\n',
         encoding='utf-8')
-    print(f'Branch {year} vorbereitet: {destination}\ncd {destination}\nKeine Commits erstellt; Änderungen vor einem späteren Commit prüfen.')
+    print(f'Branch {year} vorbereitet. Wechsle ins neue Arbeitsverzeichnis:\n'
+          f'  cd {shlex.quote(str(destination))}\n\n'
+          'Dort eine lokale cookie-Datei mit deiner AoC-Session anlegen, dann:\n'
+          '  make fetch 01\n\n'
+          'Keine Commits erstellt. Tag 01 muss auf adventofcode.com freigeschaltet sein.')
 
 
 def fetch(day, year):

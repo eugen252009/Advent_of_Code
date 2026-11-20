@@ -4,30 +4,25 @@ Downloader und persönliche Lösungen für [Advent of Code](https://adventofcode
 
 **`main` enthält nur das Tooling und diese Anleitung. Aufgaben und Lösungen liegen in den Jahres-Branches.**
 
-## Jahre
+## Schnellstart: eigener AoC-Fork
 
-[2015](../../tree/2015) · [2022](../../tree/2022) · [2023](../../tree/2023) · [2024](../../tree/2024) · [2026](../../tree/2026)
+Voraussetzungen: Go **1.26+**, Python **3.9+**, Git und GNU Make.
 
-Die Branches enthalten die vorhandenen Aufgaben und Lösungsversuche, nicht zwingend vollständige Lösungen. `2026` enthält bisher nur einen lokalen Download-Entwurf.
+1. Auf GitHub **Fork** wählen und **Copy the `main` branch only** aktiviert lassen. Die Jahres-Branches brauchst du nicht.
+2. Deinen eigenen Fork klonen (URL und Verzeichnisnamen anpassen):
 
-## Voraussetzungen
+   ```sh
+   git clone --single-branch --branch main https://github.com/DEIN-NAME/Advent_of_Code.git
+   cd Advent_of_Code
+   make build
+   make next_year
+   ```
 
-Go **1.26+**, Python **3.9+**, Git und GNU Make.
+3. Den ausgegebenen `cd`-Befehl ausführen. Dort deinen eigenen AoC-Session-Cookie einrichten und `make fetch 01` starten, sobald Tag 01 freigeschaltet ist.
 
-## Neues Jahr vorbereiten
+`make next_year` startet auf einem frischen Fork mit dem laufenden Jahr, sonst mindestens mit dem Jahr nach dem höchsten vorhandenen Jahres-Branch. Zum Üben mit einem früheren Jahr: `make next_year YEAR=2024`. Der Befehl legt Branch und separates Arbeitsverzeichnis unter `../<Repo-Name>-years/<Jahr>/` an, ohne etwas zu committen oder zu pushen. `main` bleibt unverändert.
 
-```sh
-make next_year             # höchster vorhandener Jahres-Branch + 1
-make next_year YEAR=2027   # Jahr explizit wählen
-```
-
-Erstellt einen Branch und einen separaten Worktree unter `../Advent_of_Code-years/<Jahr>/` mit Tagesordnern, README und Tooling. Bestehende Branches werden nicht überschrieben. Der Befehl erstellt keine Commits und pusht nichts.
-
-Danach im neuen Worktree arbeiten:
-
-```sh
-cd ../Advent_of_Code-years/2027
-```
+Wenn du deine Lösungen veröffentlichen möchtest, prüfe `git status`, committe sie und pushe deinen Jahres-Branch mit `git push -u origin HEAD` **aus dem Jahres-Worktree**.
 
 ## Aufgaben und Inputs laden
 
@@ -38,7 +33,7 @@ session=DEIN_SESSION_WERT
 ```
 
 ```sh
-make fetch 03             # Tag 03, Jahr aus dem Branch-Namen
+make fetch 01             # Tag 01, Jahr aus dem Branch-Namen
 make fetch all            # alle Tage eines abgeschlossenen Jahres
 ```
 
@@ -63,6 +58,10 @@ utils/                  # gemeinsame Helfer je Sprache
 Alle Jahres-Branches verwenden einheitlich `days/day-XX/`. Alle Sprachen teilen sich denselben Tagesinput. C++ liegt unter `cpp/`, TypeScript unter `ts/`. Alternative Ansätze bleiben erhalten; Build-Artefakte werden nicht versioniert.
 
 JS-Module mit `part1`/`part2` lassen sich mit `make js DAY=03` starten (Node.js ab 22). Eigenständige Programme aus dem jeweiligen Sprachordner starten; Details stehen in der Jahres-README.
+
+## Beispiel-Jahrgänge im Originalrepo
+
+[2015](https://github.com/eugen252009/Advent_of_Code/tree/2015) · [2022](https://github.com/eugen252009/Advent_of_Code/tree/2022) · [2023](https://github.com/eugen252009/Advent_of_Code/tree/2023) · [2024](https://github.com/eugen252009/Advent_of_Code/tree/2024)
 
 ## Downloader direkt nutzen
 
