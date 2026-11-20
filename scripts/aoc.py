@@ -34,7 +34,7 @@ def next_year(year):
         raise ValueError(f'{destination} existiert bereits; nichts geändert')
     # The source may be dirty (initial cleanup). Copy only the current tooling;
     # never accidentally carry old yearly solutions from the base commit forward.
-    files = ['Makefile', '.gitignore', 'scripts/aoc.py', 'fetchPuzzles/main.go',
+    files = ['Makefile', '.gitignore', 'scripts/aoc.py', 'scripts/run-js.mjs', 'fetchPuzzles/main.go',
              'fetchPuzzles/go.mod', 'fetchPuzzles/go.sum', 'fetchPuzzles/Makefile']
     files += [str(p.relative_to(ROOT)) for p in (ROOT / 'fetchPuzzles').glob('*_test.go')]
     snapshots = {name: (ROOT / name).read_bytes() for name in files}
@@ -66,6 +66,7 @@ def next_year(year):
         'Lösungen je Sprache unter `days/day-03/js/`, `python/`, `rust/` usw. ablegen; '
         'alle Sprachen verwenden denselben Tagesinput. Gemeinsame Helfer liegen unter '
         '`utils/<sprache>/`. Sprachordner werden erst bei Bedarf angelegt.\n\n'
+        'JS-Module mit `part1`/`part2`: `make js DAY=03` (Node.js ab 22). Einzelne Programme aus dem jeweiligen Sprachordner starten.\n\n'
         'Downloads überschreiben bestehende Aufgaben und Inputs. Nur freigeschaltete Tage abrufen.\n\n'
         '`make next_year` bereitet den nächsten Jahres-Branch in einem separaten Worktree vor. '
         'Diese Vorbereitung enthält keine Commits; auch die leeren Tagesordner sind nur Vorlagen, keine Lösungen.\n',
