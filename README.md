@@ -1,32 +1,45 @@
 # Advent of Code 2015
 
-`inputs/2015/day-01/` bis `day-25/` enthalten die vorhandenen Aufgaben. Unter `inputs/2015/day-03/js/` liegt ein weiterer Lösungsansatz. `solutions/python/js/days/` enthält die historischen JS-Lösungen und Vorlagen für alle 25 Tage, `solutions/python/python3/` den Python-Ansatz. Der Ordnername `python` enthält also auch JavaScript. Die alten Sammel-Runner haben veraltete Pfade/API-Aufrufe und sind nicht als funktionierender Komplettlauf zu verstehen.
+JS-Lösungen und Vorlagen für alle 25 Tage. Tag 01 enthält außerdem Python. Tag 03 enthält unter `js/part1.js` und `js/run-alternative.js` einen weiteren Lösungsansatz. Die zusätzliche Aufgabenfassung bei Tag 01 bleibt unter `notes/` erhalten.
 
-## Downloader
+## Struktur
 
-Quellcode: `fetchPuzzles/`, Go ab 1.26.
-
-```sh
-(cd fetchPuzzles && go build -o ../getPuzzle .)
-./getPuzzle 1 2015
+```text
+days/day-XX/
+├── README.md       # Aufgabe, falls vorhanden
+├── input           # gemeinsamer persönlicher Input, gitignored
+├── example.txt     # Beispielinput, falls vorhanden
+└── <sprache>/      # js, ts, python, c, cpp, go, rust, bash
+utils/<sprache>/    # gemeinsame Helfer
 ```
 
-Im aktuellen Arbeitsverzeichnis muss eine lokale Datei `cookie` mit `session=DEIN_SESSION_WERT` liegen. Der Downloader schreibt nach `2015/day-XX/`; historische Lösungen können Inputs an anderen Pfaden erwarten. Vorhandene Downloads werden überschrieben. Persönliche Inputs und Cookies nicht committen.
+Es gibt nur noch dieses Tageslayout, keine separaten `inputs/`- oder `solutions/`-Ordner. Sprachordner werden nur für vorhandene Lösungen angelegt. Alternative Ansätze bleiben im Sprachordner, zusätzliche Aufgabenfassungen unter `notes/` erhalten.
 
-Historische Lösungspfade wurden bewusst nicht umbenannt. Aufgaben, Lösungsversuche und leere Vorlagen sind keine Aussage darüber, ob ein Tag vollständig gelöst ist.
+## Download
 
-## Stand der Aufräumaktion
+Go ab 1.26, Python ab 3.9, Git und GNU Make erforderlich. Im Branch-Hauptverzeichnis eine lokale `cookie`-Datei mit `session=DEIN_WERT` anlegen:
 
-Dieser Worktree ist eine **uncommittete Vorbereitung** der Branch-Trennung. Erst ein späterer Commit hält die getrennten Inhalte im Branch fest. Es wurde nichts gepusht.
+```sh
+make fetch 03
+make fetch all             # nur abgeschlossene Jahre
+make next_year             # neuen Jahres-Worktree vorbereiten
+```
 
-Die zentrale Dokumentation zum Tool und zur Jahresstruktur liegt auf `main`.
+Downloads überschreiben `README.md` und `input` des jeweiligen Tages. Cookies und persönliche Inputs niemals committen.
 
-## Neuer make-Workflow
+## Lösungen ausführen
 
-`make fetch 03` lädt Tag 03 für dieses Jahr nach `days/day-03/README.md` und `days/day-03/input`. Dafür im Worktree eine lokale `cookie`-Datei mit `session=DEIN_WERT` anlegen. Bestehende Downloads werden überschrieben. Historische Lösungspfade bleiben unverändert; Input-Zugriffe bei Bedarf auf `days/day-XX/input` anpassen.
+JS-Module mit exportierten `part1`/`part2`-Funktionen (2015 und 2024):
 
-`make next_year` erstellt den nächsten Jahres-Branch mit 25 Tagesordnern in einem separaten Worktree; `YEAR=YYYY` legt das Jahr explizit fest. Keine Commits oder Pushes. Python ab 3.9, Go ab 1.26 und GNU Make erforderlich. Lösungen liegen künftig unter `days/day-XX/<sprache>/`, mit einem gemeinsamen Input pro Tag.
+```sh
+make js DAY=01             # Node.js ab 22
+make js                    # Module mit vorhandenem Input ausführen
+```
 
-Downloader aktualisiert: Go ab 1.26. Standardziel auch bei direktem Aufruf ist `days/day-XX/`. `./getPuzzle 03` erkennt das Jahr aus dem Branch; alternativ `-year JAHR -day TAG`. `-output` und `-cookie` erlauben andere Pfade. Alte Positionsaufrufe bleiben unterstützt. Nur Aufgabenartikel werden konvertiert; HTTP-/Parserfehler lassen vorhandene Dateien unverändert. Inputs werden mit 0600 gespeichert. Tests: `make -C fetchPuzzles test`.
+Für Tag 04 von 2015 zuerst die Abhängigkeiten in `days/day-04/js/` installieren. Python Tag 01: `python3 days/day-01/python/run.py`.
 
-`make fetch all` lädt alle Tage dieses Jahres (nur abgeschlossene Jahre). Bestehende Downloads werden überschrieben; zwei Sekunden Pause zwischen Tagen, Abbruch beim ersten Fehler.
+Eigenständige Programme (insbesondere 2022/2023) aus dem jeweiligen Sprachordner starten. Sie lesen den gemeinsamen Tagesinput als `../input`. Rust-`include_str!` ist relativ zur Quelldatei; Inputs müssen vor dem Kompilieren vorhanden sein. Abhängigkeiten und Build-Befehle stehen in der jeweiligen `package.json`, `Cargo.toml` oder `Makefile`. Vorhandene Beispielinputs liegen auf Tagesebene; manche Lösungsversuche verwenden weiterhin bewusst Beispiele.
+
+Die Aufräumaktion ändert keine Lösungsalgorithmen: Unfertige Programme, Vorlagen und bekannte Lösungsfehler werden dadurch nicht automatisch funktionsfähig. Leere Tagesordner sind kein gelöstes Rätsel.
+
+Downloader-Tests ohne echte AoC-Anfragen: `make -C fetchPuzzles test`.
