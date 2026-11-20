@@ -1,5 +1,14 @@
 **/node_modules
 **/target
+**/build/
+**/__pycache__/
+*.pyc
+*.prof
+**/go/adventofcode
+**/go/adventofcode.test
+**/c/out
+**/c/part1
+**/go/cmp
 input
 input.txt
 cookie

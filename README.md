@@ -60,7 +60,9 @@ days/
 utils/                  # gemeinsame Helfer je Sprache
 ```
 
-Alle Sprachen teilen sich denselben Tagesinput. Ältere Lösungen behalten vorerst ihre historischen Pfade unter `inputs/`, `solutions/` oder `<Jahr>/`; deren Input-Zugriffe müssen gegebenenfalls angepasst werden.
+Alle Jahres-Branches verwenden einheitlich `days/day-XX/`. Alle Sprachen teilen sich denselben Tagesinput. C++ liegt unter `cpp/`, TypeScript unter `ts/`. Alternative Ansätze bleiben erhalten; Build-Artefakte werden nicht versioniert.
+
+JS-Module mit `part1`/`part2` lassen sich mit `make js DAY=03` starten (Node.js ab 22). Eigenständige Programme aus dem jeweiligen Sprachordner starten; Details stehen in der Jahres-README.
 
 ## Downloader direkt nutzen
 
