@@ -1,3 +1,7 @@
+/getPuzzle
+/fetchPuzzles/getPuzzle
+/testcookie
+.cocoindex_code/
 **/node_modules
 **/target
 input
@@ -6,3 +10,5 @@ cookie
 **/*cache*
 **/pnpm-lock.yaml
 
+# CocoIndex Code (ccc)
+/.cocoindex_code/
