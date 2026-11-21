@@ -1,5 +1,5 @@
 import { isMain, readInput, runParts } from "../../../bootstrap.js";
-import part1 from "./solution.js";
+import { part1 } from "./part01.js";
 
 export { part1 };
 export const loadInput = () => undefined;

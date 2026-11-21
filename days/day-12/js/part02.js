@@ -87,7 +87,8 @@ export class Springs {
 // 		));
 
 
-export default function part2(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 //Tests
 const test1 = new Springs("???.###", [1, 1, 3]);
 const test2 = new Springs(".??..??...?##.", [1, 1, 3]);

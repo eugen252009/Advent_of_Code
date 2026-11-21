@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part2(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 const input = rawInput.slice(0, -1);
 const [time, distance] = input.split("\n").map(line => line.split(":")[1].trim()).map(item => item.replaceAll(" ", ""))
 

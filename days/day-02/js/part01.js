@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 
 const input = rawInput.toString().slice(0, -1)
 const testinput = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green

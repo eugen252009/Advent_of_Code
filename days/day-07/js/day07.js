@@ -1,7 +1,8 @@
-import { isMain, readInput, runParts } from "../../../bootstrap.js";
-const part1 = () => import("./part1.js");
+import { isMain, runParts } from "../../../bootstrap.js";
 
-export { part1 };
+export function part1() {
+  return import("./part01.js");
+}
 export const loadInput = () => undefined;
 
 if (isMain(import.meta.url)) {

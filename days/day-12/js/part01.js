@@ -34,7 +34,8 @@ function compareArr(a, b) {
 	return a.every((x, id) => x === b[id]);
 }
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 const data = fs
 	.readFileSync(new URL("../example.txt", import.meta.url), "utf8")
 	.split("\n")

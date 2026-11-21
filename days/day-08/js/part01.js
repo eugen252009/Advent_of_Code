@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 Array.prototype.sliceArr = function(to) {
 	const res = []
 	while (this.length > 0) {

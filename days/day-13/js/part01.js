@@ -1,7 +1,8 @@
 import assert from "node:assert";
 import { readFileSync } from "node:fs";
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 
 const input = rawInput.split("\n\n")
 class Mirrors {

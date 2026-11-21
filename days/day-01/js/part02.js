@@ -1,5 +1,6 @@
 
-export default function part2(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 let finalinput = rawInput.toString()
 let input = `two1nine
 eightwothree

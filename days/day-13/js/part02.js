@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 Array.prototype.last = function() {
 	return this[this.length - 1]
 }
@@ -19,7 +20,7 @@ function solve(input) {
 		res.push(calc(data))
 	}
 	const result = res.reduce((acc, val) => acc + val, 0)
-	console.log("result:\t", result  )
+	console.log("result:\t", result)
 }
 function calc(slice) {
 	const res = [slice]
@@ -28,16 +29,18 @@ function calc(slice) {
 		for (let j = 0; j < res[i].length - 1; j++) {
 			const element = res[i][j]
 			const element2 = res[i][j + 1]
-			// if (element2 == undefined) break
 			data.push(element2 - element)
 		}
 		res.push(data)
-		if (data.reduce((acc, val) => acc - val) ===0 ) { break }
+		if (data.reduce((acc, val) => acc - val) == 0) { break }
 	}
+	console.log(res)
 	for (let i = res.length - 1; i > 0; i--) {
 		if (i - 1 >= 0)
-			res[i - 1].push(res[i].last() + res[i - 1].last())
+			res[i - 1].unshift(res[i - 1][0] - res[i][0])
+		console.log({ two: res[i][0], one: res[i - 1][0] })
 	}
-	return res.first().last()
+	console.log(res)
+	return res.first().first()
 }
 }

@@ -1,4 +1,5 @@
-export default function part2(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 const input = rawInput;
 function addAll(acc, x, id, _arr) {
 	return acc += Number(x.split("=").at(-1)) * id

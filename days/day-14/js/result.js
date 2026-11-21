@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs"
-import { result as part1, Test as test1 } from "./part1.js"
-// import { result as part2, Test as test2 } from "./part2.js"
+import { result as part1, Test as test1 } from "./part01.js"
+// import { result as part2, Test as test2 } from "./part02.js"
 const input = readFileSync("../input", "utf8").slice(0, -1)
 test1()
 // test2()

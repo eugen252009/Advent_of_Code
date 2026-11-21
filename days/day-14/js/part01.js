@@ -18,6 +18,12 @@ export function Test() {
 	console.log("All Tests Passed")
 }
 
+/** @param {string} input */
+export function part1(input) {
+	Test();
+	return result(input.slice(0, -1));
+}
+
 export function result(x) {
 	const [newMaze, size] = tiltup(x)
 	const res = CountRocks(newMaze, size)

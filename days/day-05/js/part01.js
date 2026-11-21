@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 const print = 0
 function log(...a) {
 	if (print)

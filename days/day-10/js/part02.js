@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part2(rawInput) {
+/** @param {string} rawInput */
+export function part2(rawInput) {
 const input = rawInput
 const toBottom = [
 	"|",

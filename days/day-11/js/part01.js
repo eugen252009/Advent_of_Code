@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 
-export default function part1(rawInput) {
+/** @param {string} rawInput */
+export function part1(rawInput) {
 const input = readFileSync(new URL("../example.txt", import.meta.url), "utf8")
 const nearbycells = [-1, 1, 0, 0]
 const nearbyrows = [0, 0, -1, 1]
