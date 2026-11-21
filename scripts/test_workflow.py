@@ -37,11 +37,19 @@ class WorkflowTests(unittest.TestCase):
             root = Path(tmp)
             (root / 'scripts').mkdir()
             shutil.copy2(ROOT / 'scripts/run-js.mjs', root / 'scripts/run-js.mjs')
+            shutil.copy2(ROOT / 'Makefile', root / 'Makefile')
+            bootstrap = (ROOT / 'bootstrap.js').read_text().replace('export const DAY = 1;', 'export const DAY = 3;')
+            (root / 'bootstrap.js').write_text(bootstrap)
             day = root / 'days/day-03'
             (day / 'js').mkdir(parents=True)
             (day / 'input').write_text('abc\n')
             (day / 'js/package.json').write_text('{"type":"module"}')
-            (day / 'js/solution.js').write_text('export default {part1: input => input.length, part2: input => input.toUpperCase()};')
+            (day / 'js/solution.js').write_text(
+                'import { readInput } from "../../../bootstrap.js";\n'
+                'export default {part1: input => input.length, part2: () => readInput(import.meta.url).toUpperCase()};')
+            default = subprocess.run(['make', 'js'], cwd=root, capture_output=True, text=True)
+            self.assertEqual(default.returncode, 0, default.stderr)
+            self.assertIn('part2: ABC', default.stdout)
             result = subprocess.run(['node', str(root / 'scripts/run-js.mjs'), '03'], cwd=root / 'scripts', capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('part1: 3', result.stdout)
