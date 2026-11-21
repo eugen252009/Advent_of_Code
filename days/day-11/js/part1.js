@@ -1,11 +1,13 @@
 import { readFileSync } from "fs"
-const input = readFileSync("../example.txt", "utf8")
+
+export default function part1(rawInput) {
+const input = readFileSync(new URL("../example.txt", import.meta.url), "utf8")
 const nearbycells = [-1, 1, 0, 0]
 const nearbyrows = [0, 0, -1, 1]
 
 const parsedinput = parse(input)
 const result = solve(parsedinput)
-console.log({ result })
+return result
 
 function parse(inputstring) {
 	const data = inputstring.split("\n").filter(line => line.length).flatMap(line => line.split(""))
@@ -41,4 +43,5 @@ function bfs(e, f) {
 
 	// console.log(e, f)
 	return 1
+}
 }

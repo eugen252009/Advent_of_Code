@@ -1,7 +1,9 @@
 import assert from "node:assert";
 import { readFileSync } from "node:fs";
 
-const input = readFileSync("../input", "utf8").split("\n\n")
+export default function part1(rawInput) {
+
+const input = rawInput.split("\n\n")
 class Mirrors {
 	mirror = ""
 	constructor(input) {
@@ -71,3 +73,4 @@ const result = input.reduce((acc, galaxy) => {
 	return acc + new Mirrors(galaxy).calc()
 }, 0)
 console.log(result)
+}

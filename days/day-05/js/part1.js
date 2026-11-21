@@ -1,5 +1,7 @@
-const print = 0
 import { readFileSync } from "fs";
+
+export default function part1(rawInput) {
+const print = 0
 function log(...a) {
 	if (print)
 		for (const item of a) {
@@ -39,7 +41,7 @@ temperature-to-humidity map:
 humidity-to-location map:
 60 56 37
 56 93 4`
-input = readFileSync("../input", "utf8").slice(0, -1);
+input = rawInput.slice(0, -1);
 const string = preprocessstring(input)
 console.log(string.reduce((x, acc) => x < acc ? x : acc))
 function preprocessstring(input) {
@@ -116,4 +118,5 @@ function walk(value, dict, name) {
 	}
 	// log(`Nothing found ${value}`);
 	return walk(value, dict, newName);
+}
 }

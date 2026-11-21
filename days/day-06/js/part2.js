@@ -1,5 +1,7 @@
 import { readFileSync } from "fs"
-const input = readFileSync("../input", "utf8").slice(0, -1);
+
+export default function part2(rawInput) {
+const input = rawInput.slice(0, -1);
 const [time, distance] = input.split("\n").map(line => line.split(":")[1].trim()).map(item => item.replaceAll(" ", ""))
 
 
@@ -18,4 +20,5 @@ function calcTime(time) {
 		distances.push(distance)
 	}
 	return distances
+}
 }

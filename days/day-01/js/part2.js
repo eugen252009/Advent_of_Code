@@ -1,5 +1,6 @@
-const fs = require("fs")
-let finalinput = fs.readFileSync("../input").toString()
+
+export default function part2(rawInput) {
+let finalinput = rawInput.toString()
 let input = `two1nine
 eightwothree
 abcone2threexyz
@@ -34,4 +35,5 @@ function findallOccurencys(str) {
 	return result
 }
 console.log(`Test input:\t${solve(input)} should be 281`)
-console.log(`Final input:\t${solve(finalinput)}`)
+return solve(finalinput)
+}

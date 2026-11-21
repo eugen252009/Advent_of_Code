@@ -33,11 +33,14 @@ function compareArr(a, b) {
 	if (a.length !== b.length) return false;
 	return a.every((x, id) => x === b[id]);
 }
+
+export default function part1(rawInput) {
 const data = fs
-	.readFileSync("../example.txt", "utf8")
+	.readFileSync(new URL("../example.txt", import.meta.url), "utf8")
 	.split("\n")
 	.filter(x => x)
 	.map(x => new Springs(x.split(" ").at(0), x.split(" ").at(1).split(",").map(x => +x)));
 
 // Part 1
 console.log("Part 1:", data.reduce((acc, x) => acc += x.getAllPossibilites(), 0))
+}

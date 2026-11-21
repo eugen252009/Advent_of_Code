@@ -1,3 +1,5 @@
+
+export default function part1(rawInput) {
 const testinput = `.|...\\....
 |.-.\\.....
 .....|-...
@@ -96,3 +98,4 @@ console.log()
 const Result = depthFirst(testinput,);
 
 console.log({ Result });
+}

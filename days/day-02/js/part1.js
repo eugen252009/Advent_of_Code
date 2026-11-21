@@ -1,6 +1,8 @@
 import { readFileSync } from "fs"
 
-const input = readFileSync("../input").toString().slice(0, -1)
+export default function part1(rawInput) {
+
+const input = rawInput.toString().slice(0, -1)
 const testinput = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
 Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
@@ -13,7 +15,7 @@ const cubelist = {
 	blue: 14,
 }
 console.log(`Part 1 Test:\t${main(testinput)}/8`);
-console.log(`Part 1 Output:\t${main(input)}`);
+return main(input);
 
 function main(string) {
 	let result = 0
@@ -44,4 +46,5 @@ function parseString(string) {
 		return { id, game }
 	})
 	return { games: parse }
+}
 }

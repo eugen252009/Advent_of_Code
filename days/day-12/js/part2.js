@@ -77,7 +77,7 @@ export class Springs {
 
 
 // const data = fs
-// 	.readFileSync("../example.txt", "utf8")
+// 	.readFileSync(new URL("../example.txt", import.meta.url), "utf8")
 // 	.split("\n")
 // 	.filter(x => x)
 // 	.map(x =>
@@ -86,6 +86,8 @@ export class Springs {
 // 			x.split(" ")?.at(1)?.split(",").map(parseInt),
 // 		));
 
+
+export default function part2(rawInput) {
 //Tests
 const test1 = new Springs("???.###", [1, 1, 3]);
 const test2 = new Springs(".??..??...?##.", [1, 1, 3]);
@@ -122,4 +124,4 @@ console.log({
 	Result: result,
 	// text: test1.springText
 })
-
+}

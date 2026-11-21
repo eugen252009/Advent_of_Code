@@ -1,3 +1,6 @@
+import { readFileSync } from "fs"
+
+export default function part1(rawInput) {
 Array.prototype.last = function() {
 	return this[this.length - 1]
 }
@@ -5,8 +8,7 @@ Array.prototype.first = function() {
 	return this[0]
 }
 
-import { readFileSync } from "fs"
-const input = readFileSync("../input", "utf8")
+const input = rawInput
 	.split("\n")
 	.filter(line => line.length)
 	.map(i => i.split(" ").flatMap(i => parseInt(i)))
@@ -37,4 +39,5 @@ function calc(slice) {
 			res[i - 1].push(res[i].last() + res[i - 1].last())
 	}
 	return res.first().last()
+}
 }

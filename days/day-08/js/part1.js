@@ -1,3 +1,6 @@
+import { readFileSync } from "fs"
+
+export default function part1(rawInput) {
 Array.prototype.sliceArr = function(to) {
 	const res = []
 	while (this.length > 0) {
@@ -11,8 +14,7 @@ Array.prototype.parse = function() {
 	return res
 }
 
-import { readFileSync } from "fs"
-const input = readFileSync("../input", "utf8")
+const input = rawInput
 	.slice(0, -1)
 	.split("\n")
 	.filter(line => line.length).flat(i => i.trim().split("=")).flatMap(i => i.split("="))
@@ -38,4 +40,5 @@ function solve(input) {
 		}
 	}
 	console.log(res.length - 1)
+}
 }

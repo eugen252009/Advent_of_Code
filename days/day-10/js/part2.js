@@ -1,5 +1,7 @@
 import { readFileSync } from "fs"
-const input = readFileSync("../input", "utf8")
+
+export default function part2(rawInput) {
+const input = rawInput
 const toBottom = [
 	"|",
 	"J",
@@ -172,4 +174,5 @@ function parse(maze, cols) {
 		});
 	return mazemap
 }
-console.log((ways.length + 1) / 2)
+return (ways.length + 1) / 2;
+}

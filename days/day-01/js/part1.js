@@ -1,5 +1,6 @@
-const fs = require("fs")
-let finalinput = fs.readFileSync("../input").toString()
+
+export default function part1(rawInput) {
+let finalinput = rawInput.toString()
 let input = `1abc2
 pqr3stu8vwx
 a1b2c3d4e5f
@@ -17,4 +18,5 @@ function solve(inputstring) {
 	return counter
 }
 console.log(`Test input:\t ${solve(input)} should be 142`)
-console.log(`Final input:\t ${solve(finalinput)}`)
+return solve(finalinput)
+}
