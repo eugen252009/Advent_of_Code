@@ -65,17 +65,27 @@ Für JavaScript (Node.js ab 22) ändere `DAY` in `bootstrap.js` und starte `make
 
 Der Einstiegspunkt ist `days/day-XX/js/dayXX.js`. Starte ihn aus dem Sprachordner mit `node dayXX.js`, oder nutze `make js DAY=XX` im Repo-Hauptverzeichnis. Der Einstiegspunkt kann `part1` und `part2` aus separaten Dateien importieren und exportieren. Der Runner übergibt den Tagesinput an die Funktionen:
 
-```js
-import { isMain, readInput, runParts } from "../../../bootstrap.js";
+In `part01.js` und `part02.js` stehen die benannten Funktions-Exports, zum Beispiel:
 
+```js
+/** @param {string} input */
 export function part1(input) {
   return input.split("\n").length;
 }
+```
 
+`dayXX.js` verbindet die Teile. Tests kannst du in `part01.test.js` und `part02.test.js` ablegen.
+
+```js
+import { isMain, readInput, runParts } from "../../../bootstrap.js";
+import { part1 } from "./part01.js";
+import { part2 } from "./part02.js";
+
+export { part1, part2 };
 export const loadInput = () => readInput(import.meta.url);
 
 if (isMain(import.meta.url)) {
-  await runParts({ part1 }, loadInput);
+  await runParts({ part1, part2 }, loadInput);
 }
 ```
 
