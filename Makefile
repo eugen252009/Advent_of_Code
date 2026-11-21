@@ -1,9 +1,29 @@
 .DEFAULT_GOAL := help
-.PHONY: js
-js:
-	node scripts/run-js.mjs $(if $(DAY),$(DAY),all)
+LANG_GOALS := $(filter js c rust,$(MAKECMDGOALS))
+.PHONY: js c rust test
+ifneq ($(filter test,$(MAKECMDGOALS)),)
+ifneq ($(words $(LANG_GOALS)),1)
+$(error Usage: make js|c|rust test [DAY=03])
+endif
+ifneq ($(words $(MAKECMDGOALS)),2)
+$(error Usage: make js|c|rust test [DAY=03])
+endif
+TEST_FLAG := --test
+endif
 
-.PHONY: build help next_year fetch
+test:
+	@:
+
+js:
+	node scripts/run-js.mjs $(TEST_FLAG) $(if $(DAY),'$(DAY)')
+
+c rust:
+	python3 scripts/run-native.py $@ $(if $(DAY),'$(DAY)') $(TEST_FLAG)
+
+.PHONY: build help next_year fetch doctor
+
+doctor:
+	@sh scripts/doctor.sh
 
 # Positional day: make fetch 03. Reject other additional targets.
 ifneq ($(filter fetch,$(MAKECMDGOALS)),)
@@ -34,4 +54,7 @@ help:
 	@echo 'make next_year [YEAR=2027]  Jahres-Worktree anlegen (frischer Fork: laufendes Jahr)'
 	@echo 'make fetch 03 [YEAR=2027]   Aufgabe und Input für Tag 03 laden'
 	@echo 'make fetch all [YEAR=2024] Alle Tage eines abgeschlossenen Jahres laden'
+	@echo 'make js|c|rust [DAY=03]    Lösung starten (Standardtag: bootstrap.js)'
+	@echo 'make js|c|rust test        Tests der gewählten Sprache ausführen'
 	@echo 'make build                 Downloader bauen'
+	@echo 'make doctor                Python, Node.js, Go und Cookie prüfen'

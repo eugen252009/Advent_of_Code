@@ -35,9 +35,8 @@ def next_year(year):
     destination = primary.parent / f'{primary.name}-years' / str(year)
     if destination.exists():
         raise ValueError(f'{destination} existiert bereits; nichts geändert')
-    # The source may be dirty (initial cleanup). Copy only the current tooling;
-    # never accidentally carry old yearly solutions from the base commit forward.
-    files = ['Makefile', '.gitignore', 'scripts/aoc.py', 'scripts/run-js.mjs', 'fetchPuzzles/main.go',
+    # Copy tooling only; a new year starts without puzzles, solutions or credentials.
+    files = ['Makefile', '.gitignore', 'bootstrap.js', 'scripts/aoc.py', 'scripts/doctor.sh', 'scripts/run-js.mjs', 'scripts/run-native.py', 'fetchPuzzles/main.go',
              'fetchPuzzles/go.mod', 'fetchPuzzles/go.sum', 'fetchPuzzles/Makefile']
     files += [str(p.relative_to(ROOT)) for p in (ROOT / 'fetchPuzzles').glob('*_test.go')]
     if (ROOT / 'scripts/test_workflow.py').is_file():
@@ -64,17 +63,25 @@ def next_year(year):
         f'# Advent of Code {year}\n\n'
         '## Aufgaben herunterladen\n\n'
         'Go ab 1.26, Python ab 3.9 und make benötigt. Im Branch-Hauptverzeichnis eine lokale '
-        '`cookie`-Datei mit `session=DEIN_WERT` anlegen, dann:\n\n'
-        '```sh\nmake fetch 01\nmake fetch all  # nur abgeschlossene Jahre\n```\n\n'
+        '`cookie`-Datei mit dem AoC-Session-Wert anlegen (`session=` ist optional), dann:\n\n'
+        '```sh\nmake doctor\nmake fetch 01\nmake fetch all  # nur abgeschlossene Jahre\n```\n\n'
         'Aufgabe: `days/day-01/README.md`, persönlicher Input: `days/day-01/input` '
         '(gitignored). Beispielinputs als `example.txt` versionieren. '
         'Lösungen je Sprache unter `days/day-01/js/`, `python/`, `rust/` usw. ablegen; '
         'alle Sprachen verwenden denselben Tagesinput. Gemeinsame Helfer liegen unter '
         '`utils/<sprache>/`. Sprachordner werden erst bei Bedarf angelegt.\n\n'
-        'JS-Module mit `part1`/`part2`: `make js DAY=03` (Node.js ab 22). Einzelne Programme aus dem jeweiligen Sprachordner starten.\n\n'
+        'Für JavaScript (Node.js ab 22) die Tageszahl `DAY` in `bootstrap.js` ändern und `make js` ausführen. '
+        '`days/day-XX/js/dayXX.js` exportiert `part1(input)` und/oder `part2(input)`. '
+        'Die Funktionen können aus eigenen Dateien importiert werden. Der Runner übergibt den Tagesinput. '
+        'Für den direkten Start mit Node lässt sich `runParts` aus `bootstrap.js` verwenden.\n\n'
+        '`make js test` ruft `Tests()` oder `test()` auf. `make c test` kompiliert eigenständige '
+        '`test*.c`-Dateien mit `main()`; `make rust test` führt `cargo test` je Tagesprojekt aus. '
+        'Mit `DAY=03` testest du nur einen Tag.\n\n'
+        '`make c` baut `c/main.c` oder `c/part*.c`; `make rust` startet das Cargo-Projekt '
+        '(bei mehreren Binaries `BIN=part1` angeben). Beide starten im Sprachordner '
+        'und übergeben `../input` als Argument.\n\n'
         'Downloads überschreiben bestehende Aufgaben und Inputs. Nur freigeschaltete Tage abrufen.\n\n'
-        '`make next_year` bereitet den nächsten Jahres-Branch in einem separaten Worktree vor. '
-        'Diese Vorbereitung enthält keine Commits; auch die leeren Tagesordner sind nur Vorlagen, keine Lösungen.\n',
+        '`make next_year` legt einen Jahres-Branch in einem separaten Worktree an. Es erstellt keine Commits.\n',
         encoding='utf-8')
     print(f'Branch {year} vorbereitet. Wechsle ins neue Arbeitsverzeichnis:\n'
           f'  cd {shlex.quote(str(destination))}\n\n'
@@ -96,7 +103,7 @@ def fetch(day, year):
     if day == 'all' and year >= date.today().year:
         raise ValueError('fetch all nur für abgeschlossene Jahre verwenden')
     if not (ROOT / 'cookie').is_file():
-        raise ValueError(f'Cookie fehlt: {ROOT / "cookie"} (Inhalt: session=DEIN_WERT)')
+        raise ValueError(f'Cookie fehlt: {ROOT / "cookie"} (AoC-Session-Wert; session= ist optional)')
     selection = ['-all'] if day == 'all' else ['-day', str(int(day))]
     subprocess.run(['go', 'run', '.', '-year', str(year), *selection,
                     '-output', str(ROOT / 'days'), '-cookie', str(ROOT / 'cookie')],
